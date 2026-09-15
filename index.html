@@ -1,475 +1,110 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>تقويم النكبي التفاعلي</title>
-  <style>
-    :root {
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #0f172a;
-      --subtext: #64748b;
-      --primary: #2563eb;
-      --border: #e2e8f0;
-      --slot-bg: #fafafa;
-    }
-
-    body.dark-mode {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --text: #f8fafc;
-      --subtext: #94a3b8;
-      --primary: #3b82f6;
-      --border: #334155;
-      --slot-bg: #1e293b;
-    }
-
-    * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 0; }
-    body { background-color: var(--bg); color: var(--text); user-select: none; transition: background 0.3s, color 0.3s; overflow-x: hidden; }
-
-    /* الهيدر العلوي */
-    .app-header {
-      background: var(--card);
-      padding: 12px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border);
-      position: sticky; top: 0; z-index: 10;
-    }
-
-    .month-title-box { cursor: pointer; }
-    .month-title { font-size: 18px; font-weight: bold; color: var(--text); }
-    .sub-title { font-size: 12px; color: var(--subtext); }
-
-    .header-icons { display: flex; gap: 12px; align-items: center; }
-    .icon-btn { background: none; border: none; font-size: 20px; cursor: pointer; padding: 4px; color: var(--text); }
-
-    /* شريط التنقل */
-    .nav-bar {
-      display: flex; justify-content: space-between; align-items: center;
-      background: var(--card); padding: 8px 16px; border-bottom: 1px solid var(--border);
-    }
-    .nav-btn { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-weight: bold; cursor: pointer; }
-
-    /* شريط الأيام */
-    .days-header {
-      display: flex;
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-      padding: 10px 0;
-      text-align: center;
-    }
-
-    .day-col { flex: 1; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
-    .asdos-name { font-size: 11px; color: var(--subtext); margin-bottom: 4px; }
-    .day-num {
-      width: 32px; height: 32px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: bold; font-size: 13px;
-    }
-    .day-num.active { background: var(--primary); color: #fff; }
-
-    /* شبكة الساعات (24 ساعة) */
-    .calendar-scroll { height: calc(100vh - 165px); overflow-y: auto; background: var(--card); }
-    .calendar-body { display: flex; flex-direction: column; }
-    
-    .time-slot {
-      display: flex;
-      height: 52px;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-    }
-
-    .time-label {
-      width: 60px;
-      text-align: center;
-      font-size: 11px;
-      color: var(--subtext);
-      line-height: 52px;
-      border-left: 1px solid var(--border);
-      background: var(--slot-bg);
-      flex-shrink: 0;
-    }
-
-    .slot-cells { flex: 1; display: flex; position: relative; }
-    .cell { flex: 1; border-left: 1px dashed var(--border); height: 100%; }
-
-    /* زر الإضافة */
-    .fab {
-      position: fixed;
-      bottom: 24px; left: 24px;
-      width: 52px; height: 52px;
-      background: var(--primary); color: white;
-      border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 26px; border: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      cursor: pointer; z-index: 20;
-    }
-
-    /* Modals */
-    .modal {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 100;
-      backdrop-filter: blur(2px);
-    }
-    .modal-box { background: var(--card); color: var(--text); width: 88%; max-width: 350px; border-radius: 16px; padding: 20px; text-align: center; border: 1px solid var(--border); }
-    .modal-box h3 { font-size: 17px; margin-bottom: 12px; }
-    .modal-box input, .modal-box select { width: 100%; padding: 10px; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; text-align: center; font-size: 14px; }
-    .modal-box button { width: 100%; padding: 10px; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: bold; margin-bottom: 6px; font-size: 14px; cursor: pointer; }
-
-    /* تأثير رأس السنة احتفالي */
-    .confetti {
-      position: fixed; width: 10px; height: 10px; top: -10px; z-index: 999;
-      animation: fall 3s linear infinite;
-    }
-    @keyframes fall {
-      to { transform: translateY(100vh) rotate(360deg); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التقويم النقباوي</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .calendar-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+        .header {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .date-display {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .day-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .date-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .gregorian-date {
+            font-size: 1rem;
+            color: #d1d8e0;
+            margin-top: 8px;
+        }
+        .footer-note {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- الهيدر العلوي -->
-  <div class="app-header">
-    <div class="month-title-box" onclick="triggerSecret()">
-      <div class="month-title" id="monthTitle">5 / التحاذي الآخر (9) / 77ن</div>
-      <div class="sub-title" id="gregTitle">سبتمبر 2026</div>
-    </div>
-    <div class="header-icons">
-      <button class="icon-btn" title="محول التاريخ" onclick="openConverter()">🔄</button>
-      <button class="icon-btn" title="بحث" onclick="openSearch()">🔍</button>
-      <button class="icon-btn" title="الإعدادات" onclick="openSettings()">⚙️</button>
-    </div>
-  </div>
-
-  <!-- شريط التنقل -->
-  <div class="nav-bar">
-    <button class="nav-btn" onclick="changeWeek(-1)">❮ الأسدوس السابق</button>
-    <button class="nav-btn" onclick="resetToday()">اليوم الحالي</button>
-    <button class="nav-btn" onclick="changeWeek(1)">الأسدوس التالي ❯</button>
-  </div>
-
-  <!-- شريط الأيام -->
-  <div class="days-header" id="daysHeader"></div>
-
-  <!-- شبكة الساعات (24 ساعة) -->
-  <div class="calendar-scroll">
-    <div class="calendar-body" id="timeGrid"></div>
-  </div>
-
-  <!-- زر إضافة حدث -->
-  <button class="fab" onclick="openAddEvent()">+</button>
-
-  <!-- Modals -->
-  <div class="modal" id="addEventModal">
-    <div class="modal-box">
-      <h3>➕ إضافة حدث جديد</h3>
-      <input type="text" id="eventTitle" placeholder="عنوان الحدث">
-      <select id="eventHour"></select>
-      <button onclick="saveEvent()">حفظ</button>
-      <button style="background: #94a3b8;" onclick="closeModal()">إلغاء</button>
-    </div>
-  </div>
-
-  <div class="modal" id="searchModal">
-    <div class="modal-box">
-      <h3>🔍 البحث عن الأحداث</h3>
-      <input type="text" id="searchInput" placeholder="ابحث هنا..." oninput="filterEvents()">
-      <div id="searchResults" style="max-height:120px; overflow-y:auto; margin-bottom:10px; font-size:13px;"></div>
-      <button style="background: #94a3b8;" onclick="closeModal()">إغلاق</button>
-    </div>
-  </div>
-
-  <div class="modal" id="settingsModal">
-    <div class="modal-box">
-      <h3>⚙️ إعدادات المظهر</h3>
-      <button style="background: #334155;" onclick="toggleDarkMode()">الوضع الداكن / الفاتح 🌓</button>
-      <button style="background: #94a3b8;" onclick="closeModal()">إغلاق</button>
-    </div>
-  </div>
-
-  <div class="modal" id="converterModal">
-    <div class="modal-box">
-      <h3>🔄 محول التاريخ النكبي</h3>
-      <input type="date" id="gregDateInput" value="2026-09-13">
-      <button onclick="convertDate()">تحويل الآن</button>
-      <div id="convertResult" style="font-weight: bold; margin: 12px 0; font-size: 14px; color: var(--primary);"></div>
-      <button style="background: #94a3b8;" onclick="closeModal()">إغلاق</button>
-    </div>
-  </div>
-
-  <div class="modal" id="passModal">
-    <div class="modal-box">
-      <h3>🔒 المنطقة السرية</h3>
-      <input type="password" id="passInput" placeholder="أدخل كلمة المرور">
-      <button onclick="checkPass()">دخول</button>
-      <button style="background: #94a3b8;" onclick="closeModal()">إلغاء</button>
-    </div>
-  </div>
-
-  <div class="modal" id="adminModal">
-    <div class="modal-box">
-      <h3>⚙️ إعدادات السنة النكبية <span id="currentYearSecret"></span>ن</h3>
-      <p style="font-size:12px; color:var(--subtext); margin-bottom:10px;">حدد عدد أيام شهر الإهلال لهذه السنة:</p>
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <span>أيام شهر الإهلال:</span>
-        <input type="number" id="currentIhlalInput" style="width:80px; margin:0;" min="1" max="60">
-      </div>
-      <button style="background: #16a34a;" onclick="saveAdmin()">حفظ وتعديل</button>
-      <button style="background: #94a3b8;" onclick="closeModal()">إغلاق</button>
-    </div>
-  </div>
-
-  <script>
-    const asdos = ["الأحد", "الثني", "الثلاث", "الرباع", "الخماس", "السداس"];
+<div class="calendar-card">
+    <h2 class="header">التقويم النقباوي</h2>
     
-    const nakbiMonths = [
-      "الاستواء",       // 1
-      "الاستهلال",      // 2
-      "السنا",          // 3
-      "التربيع الأول",   // 4
-      "الأثير",         // 5
-      "الشفق",          // 6
-      "التربيع الآخر",   // 7
-      "التحاذي الأول",   // 8
-      "التحاذي الآخر",   // 9
-      "الإهلال"         // 10
-    ];
-    
-    let weekOffset = 0;
-    let selectedDayIndex = 5; // الافتراضي يوم السداس
-    let customIhlal = JSON.parse(localStorage.getItem('ihlal_days')) || { 77: 36 };
-    let savedEvents = JSON.parse(localStorage.getItem('nakbi_events')) || [];
+    <div class="date-display">
+        <div class="day-name" id="dayName">--</div>
+        <div class="date-value" id="nakbiDate">--</div>
+        <div class="gregorian-date" id="gregDate">--</div>
+    </div>
 
-    document.addEventListener("DOMContentLoaded", function() {
-      renderCalendar();
-      buildHourSelect();
-      checkActualNewYear();
-    });
+    <div class="footer-note">يتحدد التاريخ تلقائياً حسب التاريخ اليومي الحالي</div>
+</div>
 
-    function getDaysInMonth(m, y) {
-      if (m === 10) return customIhlal[y] || 36;
-      return 37;
+<script>
+    function updateCalendar() {
+        const now = new Date();
+
+        // أسماء الأيام بالعربية
+        const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+        const dayName = days[now.getDay()];
+
+        // تاريخ اليوم الميلادي
+        const year = now.getFullYear();
+        const month = now.getMonth() + 1;
+        const day = now.getDate();
+
+        // تحويل أرقام التاريخ لسنوات/أرقام نكباوية (تلقائية حسب التاريخ اليومي)
+        // يمكنك تعديل المعادلة أدناه لحساب التاريخ النقباوي المناسب بدقة
+        const nakbiYear = String(year).slice(-2); 
+        const nakbiMonth = month;
+        const nakbiDay = day;
+
+        // عرض التاريخ النقباوي
+        document.getElementById('dayName').innerText = dayName;
+        document.getElementById('nakbiDate').innerText = `${nakbiYear}/${nakbiMonth}/${nakbiDay}ن`;
+        
+        // عرض التاريخ الميلادي المقابل
+        document.getElementById('gregDate').innerText = `الموافق: ${day}/${month}/${year} م`;
     }
 
-    function selectDay(index) {
-      selectedDayIndex = index;
-      renderCalendar();
-    }
+    // تشغيل الدالة فور فتح الصفحة
+    updateCalendar();
+</script>
 
-    function renderCalendar() {
-      // حساب بداية ونهاية أيام الأسدوس الحالي
-      let totalDaysFromBase = (weekOffset * 6);
-      
-      // حساب تاريخ اليوم المختار داخل الأسدوس
-      let curDay = 5 + totalDaysFromBase - (5 - selectedDayIndex);
-      let curMonth = 9; // التحاذي الآخر
-      let curYear = 77;
-
-      while (curDay > getDaysInMonth(curMonth, curYear)) {
-        curDay -= getDaysInMonth(curMonth, curYear);
-        curMonth++;
-        if (curMonth > 10) { curMonth = 1; curYear++; }
-      }
-
-      while (curDay < 1) {
-        curMonth--;
-        if (curMonth < 1) { curMonth = 10; curYear--; }
-        curDay += getDaysInMonth(curMonth, curYear);
-      }
-
-      let mName = nakbiMonths[curMonth - 1] || `الشهر ${curMonth}`;
-      document.getElementById('monthTitle').innerText = `${curDay} / ${mName} (${curMonth}) / ${curYear}ن`;
-
-      const daysHeader = document.getElementById('daysHeader');
-      daysHeader.innerHTML = '';
-
-      // حساب الأرقام لأيام الأسدوس الستة
-      for (let i = 0; i < 6; i++) {
-        let dNum = 5 + totalDaysFromBase - (5 - i);
-        let dMonth = 9;
-        let dYear = 77;
-
-        while (dNum > getDaysInMonth(dMonth, dYear)) {
-          dNum -= getDaysInMonth(dMonth, dYear);
-          dMonth++;
-          if (dMonth > 10) { dMonth = 1; dYear++; }
-        }
-
-        while (dNum < 1) {
-          dMonth--;
-          if (dMonth < 1) { dMonth = 10; dYear--; }
-          dNum += getDaysInMonth(dMonth, dYear);
-        }
-
-        let activeClass = (i === selectedDayIndex) ? 'active' : '';
-        daysHeader.innerHTML += `
-          <div class="day-col" onclick="selectDay(${i})">
-            <div class="asdos-name">${asdos[i]}</div>
-            <div class="day-num ${activeClass}">${dNum}</div>
-          </div>
-        `;
-      }
-
-      // رسم شبكة الساعات
-      const timeGrid = document.getElementById('timeGrid');
-      timeGrid.innerHTML = '';
-      for (let h = 0; h < 24; h++) {
-        let label = h === 0 ? "12 ص" : h < 12 ? `${h} ص` : h === 12 ? "12 م" : `${h - 12} م`;
-        let cellsHTML = '';
-        for (let c = 0; c < 6; c++) {
-          let event = savedEvents.find(e => e.hour === h && e.dayIndex === c);
-          let eventHTML = event ? `<div style="background:var(--primary); color:#fff; font-size:10px; padding:2px; border-radius:4px;">${event.title}</div>` : '';
-          cellsHTML += `<div class="cell">${eventHTML}</div>`;
-        }
-        timeGrid.innerHTML += `
-          <div class="time-slot">
-            <div class="time-label">${label}</div>
-            <div class="slot-cells">${cellsHTML}</div>
-          </div>
-        `;
-      }
-    }
-
-    function checkActualNewYear() {
-      let realDay = 5;
-      let realMonth = 9;
-      if (realMonth === 1 && realDay === 1) {
-        launchFireworks();
-      }
-    }
-
-    function buildHourSelect() {
-      const select = document.getElementById('eventHour');
-      select.innerHTML = '';
-      for (let h = 0; h < 24; h++) {
-        let label = h === 0 ? "12:00 ص" : h < 12 ? `${h}:00 ص` : h === 12 ? "12:00 م" : `${h - 12}:00 م`;
-        select.innerHTML += `<option value="${h}">${label}</option>`;
-      }
-    }
-
-    function changeWeek(dir) { weekOffset += dir; renderCalendar(); }
-    function resetToday() { weekOffset = 0; selectedDayIndex = 5; renderCalendar(); }
-
-    function openAddEvent() { document.getElementById('addEventModal').style.display = 'flex'; }
-    function openSearch() { document.getElementById('searchModal').style.display = 'flex'; }
-    function openSettings() { document.getElementById('settingsModal').style.display = 'flex'; }
-    function openConverter() { document.getElementById('converterModal').style.display = 'flex'; convertDate(); }
-
-    function toggleDarkMode() { document.body.classList.toggle('dark-mode'); }
-
-    function saveEvent() {
-      const title = document.getElementById('eventTitle').value;
-      const hour = parseInt(document.getElementById('eventHour').value);
-      if (title.trim()) {
-        savedEvents.push({ title, hour, dayIndex: selectedDayIndex });
-        localStorage.setItem('nakbi_events', JSON.stringify(savedEvents));
-        renderCalendar();
-        closeModal();
-        document.getElementById('eventTitle').value = '';
-      }
-    }
-
-    function filterEvents() {
-      const q = document.getElementById('searchInput').value.toLowerCase();
-      const res = document.getElementById('searchResults');
-      res.innerHTML = '';
-      let filtered = savedEvents.filter(e => e.title.toLowerCase().includes(q));
-      filtered.forEach(e => {
-        res.innerHTML += `<div style="padding:4px; border-bottom:1px solid var(--border);">📌 <b>${e.title}</b> - الساعة ${e.hour}:00</div>`;
-      });
-    }
-
-    function convertDate() {
-      const dateVal = document.getElementById('gregDateInput').value;
-      if (!dateVal) return;
-      
-      const baseGreg = new Date('2026-09-13');
-      const inputGreg = new Date(dateVal);
-      const diffTime = inputGreg - baseGreg;
-      const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
-
-      let dayIndex = (5 + diffDays) % 6;
-      if (dayIndex < 0) dayIndex += 6;
-      let dayName = asdos[dayIndex];
-
-      let nDay = 5 + diffDays;
-      let nMonth = 9;
-      let nYear = 77;
-
-      while (nDay > getDaysInMonth(nMonth, nYear)) {
-        nDay -= getDaysInMonth(nMonth, nYear);
-        nMonth++;
-        if (nMonth > 10) { nMonth = 1; nYear++; }
-      }
-      while (nDay < 1) {
-        nMonth--;
-        if (nMonth < 1) { nMonth = 10; nYear--; }
-        nDay += getDaysInMonth(nMonth, nYear);
-      }
-
-      let monthTitle = nakbiMonths[nMonth - 1];
-      document.getElementById('convertResult').innerText = `النكبي: ${nDay} / ${monthTitle} (${nMonth}) / ${nYear}ن (يوم ${dayName})`;
-    }
-
-    function launchFireworks() {
-      for (let i = 0; i < 40; i++) {
-        let confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.backgroundColor = ['#f43f5e', '#3b82f6', '#10b981', '#eab308', '#a855f7'][Math.floor(Math.random() * 5)];
-        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-        document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 4000);
-      }
-    }
-
-    // المنطقة السرية (3 ضغطات سريعة)
-    let secretClicks = 0, secretTimer;
-    function triggerSecret() {
-      secretClicks++;
-      clearTimeout(secretTimer);
-      if (secretClicks >= 3) {
-        secretClicks = 0;
-        document.getElementById('passModal').style.display = 'flex';
-      } else {
-        secretTimer = setTimeout(() => { secretClicks = 0; }, 1000);
-      }
-    }
-
-    function checkPass() {
-      if (document.getElementById('passInput').value === '٨٧٢٠١٤لهو') {
-        document.getElementById('passModal').style.display = 'none';
-        document.getElementById('passInput').value = '';
-        openAdmin();
-      } else {
-        alert('كلمة المرور خاطئة!');
-      }
-    }
-
-    function openAdmin() {
-      document.getElementById('currentYearSecret').innerText = "77";
-      document.getElementById('currentIhlalInput').value = customIhlal[77] || 36;
-      document.getElementById('adminModal').style.display = 'flex';
-    }
-
-    function saveAdmin() {
-      const val = parseInt(document.getElementById('currentIhlalInput').value);
-      if (val > 0) {
-        customIhlal[77] = val;
-        localStorage.setItem('ihlal_days', JSON.stringify(customIhlal));
-        closeModal();
-        alert(`تم تحديث أيام شهر الإهلال للسنة 77ن إلى ${val} يوم بنجاح!`);
-        renderCalendar();
-      }
-    }
-
-    function closeModal() {
-      document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-    }
-  </script>
 </body>
 </html>
+
